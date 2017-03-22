@@ -33,19 +33,21 @@ class MakeUpSomething():
         self._users = value
 
 
-def silnia(n):
-    if n > 1:
-        return n * silnia(n - 1)
-    else:
-        return 1
-
-
 obj = MakeUpSomething(34, 10, False)
 
 algo = ErlangAlgorithm(obj)
 
-algo.calculate()
-obj.users = 50
-obj.lines = 10
-algo.calculate()
+print(algo.calculate())
 
+obj.blocking_rate = 0.0019
+obj.lines = False
+
+print(algo.calculate())
+
+
+
+
+# obj.users = 5000
+# obj.lines = 400
+# algo.calculate()
+#
