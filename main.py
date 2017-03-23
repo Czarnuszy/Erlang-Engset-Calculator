@@ -20,6 +20,8 @@ class Model:
         self.lines = lines
         self.blocking_rate = blocking_rate
         self.traffic = traffic
+        self.sources = None
+
 
     def calculate_traffic_per_hour(self, calls, duration, seconds=True):
         """ Calculate the total traffic volume of one hour.
