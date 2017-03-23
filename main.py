@@ -22,7 +22,6 @@ class Model:
         self.traffic = traffic
         self.sources = None
 
-
     def calculate_traffic_per_hour(self, calls, duration, seconds=True):
         """ Calculate the total traffic volume of one hour.
         :param calls: amount of calls made in hour

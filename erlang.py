@@ -1,4 +1,4 @@
-gitfrom math import factorial
+from math import factorial
 
 
 class ErlangAlgorithm:
@@ -41,7 +41,18 @@ class ErlangAlgorithm:
 
         Pb = self.ann(lines, traffic) / _sum
 
-        return Pb
+        return format(Pb, self.precision(Pb))
+
+    def precision(self, number):
+        amount = 0
+        for n in str(number):
+            if n == '0':
+                amount += 1
+            elif n == '.':
+                continue
+            else:
+                break
+        return '.{}f'.format(amount+1)
 
     def calculate_erlang_n(self, traffic, Pb):
         """
