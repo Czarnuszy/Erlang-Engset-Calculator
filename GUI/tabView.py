@@ -1,5 +1,6 @@
 from PyQt5.QtWidgets import QMessageBox, QWidget, QGroupBox, QVBoxLayout, QRadioButton, QGridLayout, QTabWidget, QHBoxLayout, QLabel, QLineEdit, QPushButton, QCheckBox
 from PyQt5.QtCore import pyqtSlot
+from main import Model
 
 
 class MyTableWidget(QWidget):
@@ -25,10 +26,13 @@ class MyTableWidget(QWidget):
         self.Lines = QLineEdit()
         self.Traffic = QLineEdit()
         self.BlockRate.setDisabled(True)
+        self.resoult = QLineEdit()
+        self.resoult.setEnabled(False)
 
         self.TrafficLabel = QLabel("Traffic:")
         self.BlockLabel = QLabel("Blocking Rate:")
         self.LinesLabel = QLabel("Lines:")
+        self.ResoultLabel = QLabel('Resoult: ')
 
         # Create tab1 buttons
         self.LockTrafficBtn = QRadioButton("Lock Traffic")
@@ -53,6 +57,8 @@ class MyTableWidget(QWidget):
         self.tab1.layout.addWidget(self.Lines, 0, 3)
         self.tab1.layout.addWidget(self.BlockLabel, 0, 4)
         self.tab1.layout.addWidget(self.BlockRate, 0, 5)
+        self.tab1.layout.addWidget(self.resoult, 1, 3)
+        self.tab1.layout.addWidget(self.ResoultLabel, 1, 2)
         self.tab1.layout.addWidget(self.RadioGroup, 1, 5)
         self.tab1.layout.addWidget(self.calculateBtn, 2, 4)
         self.tab1.layout.addWidget(self.exitBtn, 2, 5)
@@ -70,18 +76,26 @@ class MyTableWidget(QWidget):
         self.LockLinesBtn.clicked.connect(self.LockLines)
         self.calculateBtn.clicked.connect(self.Calculate)
 
-    def Calculate(self):
-        try:
-            if not self.Traffic.isEnabled():
-                var1 = int(self.Lines.text())
-                var2 = float(self.BlockRate.text())
+    def funkcja(self, arg):
 
-            elif not self.Lines.isEnabled():
-                var1 = float(self.Traffic.text())
-                var2 = float(self.BlockRate.text())
-            elif not self.BlockRate.isEnabled():
-                var1 = int(self.Lines.text())
-                var2 = float(self.Traffic.text())
+        if arg.isEnabled():
+            if arg == self.Lines:
+                return int(arg.text())
+            else:
+                return float(arg.text())
+        else:
+            return False
+
+
+    def Calculate(self):
+        self.resoult.clear()
+        try:
+            block = self.funkcja(self.BlockRate)
+            traffic = self.funkcja(self.Traffic)
+            lines = self.funkcja(self.Lines)
+
+            model = Model(traffic, lines, block)
+            self.resoult.insert(str(model.calculate_erlang()))
         except ValueError:
             QMessageBox.warning(self, "ERROR", "Wrong input data", QMessageBox.Ok)
 
@@ -91,14 +105,17 @@ class MyTableWidget(QWidget):
         self.Traffic.setEnabled(True)
         self.Lines.setEnabled(True)
         self.BlockRate.setEnabled(False)
+        self.BlockRate.clear()
 
     def LockLines(self):
         self.Traffic.setEnabled(True)
         self.Lines.setEnabled(False)
+        self.Lines.clear()
         self.BlockRate.setEnabled(True)
 
     def LockTraffic(self):
         self.Traffic.setEnabled(False)
+        self.Traffic.clear()
         self.Lines.setEnabled(True)
         self.BlockRate.setEnabled(True)
 
