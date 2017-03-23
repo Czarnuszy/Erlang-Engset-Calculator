@@ -1,4 +1,4 @@
-from math import factorial
+gitfrom math import factorial
 
 
 class ErlangAlgorithm:
