@@ -45,12 +45,22 @@ class Model:
             self.traffic = value * self.block
         self._users = value
 
+    def validate_data(self):
+        if self.traffic is None:
+            raise ValueError("Traffic field can't be empty")
+        if self.lines is None:
+            raise ValueError("Lines field can't be empty")
+        if self.blocking_rate is None:
+            raise ValueError("Blocking rate field can't be empty")
+
     def calculate_erlang(self):
+        self.validate_data()
         return ErlangAlgorithm(self).calculate()
 
 model = Model()
 model.traffic = 17.986
 model.lines = False
+#model.lines = 10
 model.blocking_rate = 0.01
 #model.calculate_traffic_per_hour(350, 180)
 
