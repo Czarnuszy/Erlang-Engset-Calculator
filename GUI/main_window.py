@@ -10,6 +10,7 @@ class App(QMainWindow):
         self.setCentralWidget(self.table_widget)
 
         # self.resize(800, 600)
+        self.setGeometry(600, 300, 800, 100)
         self.show()
 
 

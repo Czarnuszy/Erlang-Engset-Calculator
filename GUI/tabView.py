@@ -8,6 +8,7 @@ class MyTableWidget(QWidget):
         super(QWidget, self).__init__(parent)
         self.layout = QHBoxLayout(self)
 
+
         # Initialize tab screen
         self.tabs = QTabWidget()
         self.tab1 = QWidget()
@@ -27,7 +28,7 @@ class MyTableWidget(QWidget):
         self.Traffic = QLineEdit()
         self.BlockRate.setDisabled(True)
         self.resoult = QLineEdit()
-        self.resoult.setEnabled(False)
+        self.resoult.setReadOnly(True)
 
         self.TrafficLabel = QLabel("Traffic:")
         self.BlockLabel = QLabel("Blocking Rate:")
