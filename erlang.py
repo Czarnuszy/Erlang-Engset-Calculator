@@ -59,15 +59,20 @@ class ErlangAlgorithm:
 
         return lines-1
 
-    def calculate_erlang_a(self, n, Pb):
+    def calculate_erlang_a(self, lines, Pb):
         """
         calculate traffic in erlangs
-        :param n: the number of lines
+        :param lines: the number of lines
         :param Pb: blocking rate
         :return: number of lines
         """
+        traffic = 0
+        p_search = Pb
+        while float(p_search) <= Pb:
+            traffic += .1
+            p_search = self.calculate_erlang_p(traffic, lines)
 
-        return "Not implemented yet. Sorry"
+        return traffic
 
     def ann_small(self, n, a):
         """

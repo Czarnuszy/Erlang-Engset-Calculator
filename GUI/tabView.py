@@ -87,7 +87,6 @@ class MyTableWidget(QWidget):
         else:
             return False
 
-
     def Calculate(self):
         self.resoult.clear()
         try:
@@ -106,6 +105,7 @@ class MyTableWidget(QWidget):
         self.Traffic.setEnabled(True)
         self.Lines.setEnabled(True)
         self.BlockRate.setEnabled(False)
+        self.BlockRate.autoFillBackground()
         self.BlockRate.clear()
 
     def LockLines(self):

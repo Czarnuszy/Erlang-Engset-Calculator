@@ -64,11 +64,10 @@ class Model:
         return ErlangAlgorithm(self).calculate()
 
 model = Model()
-model.traffic = 17.986
+model.traffic = False
 model.lines = 10
 #model.lines = 10
-model.blocking_rate = False
-model.users = 34
+model.blocking_rate = 0.0019
 #model.calculate_traffic_per_hour(350, 180)
 
 print(model.calculate_erlang())
