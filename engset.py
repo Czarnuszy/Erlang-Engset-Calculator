@@ -1,4 +1,4 @@
-from utils import newton, precision2
+from utils import newton, precision
 
 
 class EngsetAlgorithm:
@@ -54,8 +54,8 @@ class EngsetAlgorithm:
         right = self.basic_engset(lines, traffic, block, sources)
         while block != right:
             block += .0001
-            right = precision2(right, 4)
-            block = precision2(block, 4)
+            right = precision(right, 4)
+            block = precision(block, 4)
 
         return block
 

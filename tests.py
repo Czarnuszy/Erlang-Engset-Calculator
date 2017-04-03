@@ -13,7 +13,7 @@ class Tests(unittest.TestCase):
         self.engset_a = Model(traffic=False, lines=10, blocking_rate=0.0018, sources=500)
 
     def test_erlang_p(self):
-        self.assertEqual(self.model_p.calculate_erlang(), '0.0019')
+        self.assertEqual(self.model_p.calculate_erlang(), 0.0019)
 
     def test_erlang_n(self):
         self.assertEqual(self.model_n.calculate_erlang(), 10)

@@ -42,7 +42,7 @@ class ErlangAlgorithm:
 
         Pb = self.ann(lines, traffic) / _sum
 
-        return format(Pb, precision(Pb))
+        return precision(Pb, 4)
 
     def calculate_erlang_n(self, traffic, Pb):
         """

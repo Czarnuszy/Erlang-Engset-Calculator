@@ -61,10 +61,20 @@ class Model:
                 raise ValueError("This field can't be empty")
 
     def calculate_erlang(self):
+        """
+        Erlang algorithm
+        :return: traffic / lines / blocking_rate
+         dependence which value is equal False
+        """
         self.validate_data()
         return ErlangAlgorithm(self).calculate()
 
     def calculate_engset(self):
+        """
+        Engset algorithm
+        :return: traffic / lines / blocking_rate / sources
+         dependence which value is equal False
+        """
         self.validate_data()
         return EngsetAlgorithm(self).calculate()
 

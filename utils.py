@@ -1,23 +1,4 @@
-
-
-def precision(number):
-    """
-    :return: small number rounded to readable format
-    """
-    if number >= 1:
-        return number
-    amount = 0
-    for n in str(number):
-        if n == '0':
-            amount += 1
-        elif n == '.':
-            continue
-        else:
-            break
-    return '.{}f'.format(amount + 1)
-
-
-def precision2(number, prec):
+def precision(number, prec):
     """
     :return: small number rounded to readable format
     """
