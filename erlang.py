@@ -7,7 +7,7 @@ class ErlangAlgorithm:
     def __init__(self, model):
         self.obj = model
 
-    def get_obj_lines_and_traffic(self):
+    def get_obj_data(self):
         """
         Getting data from object
         :return: lines, traffic, blocking_rate
@@ -18,7 +18,7 @@ class ErlangAlgorithm:
         """
         Checks which parameter is false and call right function
         """
-        lines, traffic, block = self.get_obj_lines_and_traffic()
+        lines, traffic, block = self.get_obj_data()
 
         if block is False:
             return self.calculate_erlang_p(traffic, lines)
@@ -72,7 +72,7 @@ class ErlangAlgorithm:
             traffic += .1
             p_search = self.calculate_erlang_p(traffic, lines)
 
-        return traffic
+        return round(traffic, 2)
 
     def ann_small(self, n, a):
         """

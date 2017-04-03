@@ -1,26 +1,27 @@
 import math
 from erlang import ErlangAlgorithm
+from engset import EngsetAlgorithm
 
 
 class Model:
     """
     Model for ErlangB algorithm
 
-    users = amount of users / the mean call length or holding time
-    lines =  the number of servers(lines) in a trunk group / liczba punktow obslugi
-    blocking_rate = Probability of blocking
+    traffic         = the traffic in Erlangs
+    lines           =  the number of servers(lines) in a trunk group
+    blocking_rate   = Probability of blocking
+    sources         = the number of points generating the traffic
 
-    block = the mean arrival rate of new calls
-    traffic = the traffic in Erlangs = users * block
-
+    users           = amount of users / the mean call length or holding time
+    block           = the mean arrival rate of new calls
     """
-    def __init__(self, traffic=None, lines=None, blocking_rate=None, block=0.1):
-        self._block = block
+    def __init__(self, traffic=None, lines=None, blocking_rate=None, sources=None):
+        self._block = 0.1
         self._users = None
         self.lines = lines
         self.blocking_rate = blocking_rate
         self.traffic = traffic
-        self.sources = None
+        self.sources = sources
 
     def calculate_traffic_per_hour(self, calls, duration, seconds=True):
         """ Calculate the total traffic volume of one hour.
@@ -63,11 +64,17 @@ class Model:
         self.validate_data()
         return ErlangAlgorithm(self).calculate()
 
+    def calculate_engset(self):
+        self.validate_data()
+        return EngsetAlgorithm(self).calculate()
+
+
 model = Model()
-model.traffic = False
+model.traffic = 3.4
 model.lines = 10
 #model.lines = 10
-model.blocking_rate = 0.0019
+model.sources = 500
+model.blocking_rate = False
 #model.calculate_traffic_per_hour(350, 180)
 
-print(model.calculate_erlang())
+print(model.calculate_engset())
