@@ -77,4 +77,4 @@ model.sources = 500
 model.blocking_rate = False
 #model.calculate_traffic_per_hour(350, 180)
 
-print(model.calculate_engset())
+#print(model.calculate_engset())

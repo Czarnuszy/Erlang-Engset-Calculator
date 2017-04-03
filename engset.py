@@ -1,5 +1,5 @@
-from utils import newton
-
+from utils import newton, precision2
+from decimal import *
 
 class EngsetAlgorithm:
     def __init__(self, model):
@@ -26,10 +26,22 @@ class EngsetAlgorithm:
             return self.calculate_p(lines, traffic, sources)
 
     def calculate_p(self, lines, traffic, sources):
-        l = newton(sources-1, lines) * (traffic ** lines)
-        sum = 0
+        Pb = 0
 
-        for i in range(lines):
-            sum += newton(lines-1, i) * (sources ** i)
+        def calc():
+            a = traffic / (sources - traffic * (1 - Pb))
+            l = newton(sources-1, lines) * (a ** lines)
+            sum = 0
 
-        return l/sum
+            for i in range(lines):
+                sum += newton(sources-1, i) * (a ** i)
+            return l / sum
+
+        right = calc()
+
+        while Pb != right:
+            Pb += .0001
+            right = precision2(right, 4)
+            Pb = precision2(Pb, 4)
+
+        return Pb

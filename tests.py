@@ -8,6 +8,7 @@ class Tests(unittest.TestCase):
         self.model_p = Model(traffic=3.4, lines=10, blocking_rate=False)
         self.model_n = Model(traffic=3.4, lines=False, blocking_rate=0.0019)
         self.model_a = Model(traffic=False, lines=10, blocking_rate=0.0019)
+        self.engset_p = Model(traffic=3.4, lines=10, blocking_rate=False, sources=500)
 
     def test_erlang_p(self):
         self.assertEqual(self.model_p.calculate_erlang(), '0.0019')
@@ -17,6 +18,10 @@ class Tests(unittest.TestCase):
 
     def test_erlang_a(self):
         self.assertEqual(self.model_a.calculate_erlang(), 3.5)
+
+    def test_engset_p(self):
+        self.assertAlmostEqual(self.engset_p.calculate_engset(), 0.0018)
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -17,6 +17,10 @@ def precision(number):
     return '.{}f'.format(amount + 1)
 
 
+def precision2(number, prec):
+    return float(format(number, '.{}f'.format(prec )))
+
+
 def newton(n, k):
     if k == 0 or k == n:
         return 1
