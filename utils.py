@@ -18,7 +18,10 @@ def precision(number):
 
 
 def precision2(number, prec):
-    return float(format(number, '.{}f'.format(prec )))
+    """
+    :return: small number rounded to readable format
+    """
+    return float(format(number, '.{}f'.format(prec)))
 
 
 def newton(n, k):
