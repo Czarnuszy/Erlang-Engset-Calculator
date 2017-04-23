@@ -1,0 +1,92 @@
+#: import CheckBox kivy.uix.checkbox
+
+<MyPageLayout>:
+
+    BoxLayout:
+        orientation: "vertical"
+
+        padding: 10
+        spacing: 10
+
+        BoxLayout:
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+            Label:
+                text: "Erlang Method"
+
+            Label:
+                text: "Traffic"
+
+            CheckBox:
+                group: "erlang"
+                on_active: root.change('traffic')
+                allow_no_selection: False
+
+            Label:
+                text: "Lines"
+
+            CheckBox:
+                group: "erlang"
+                on_active: root.change('lines')
+                allow_no_selection: False
+
+            Label:
+                text: "Blocking Rate"
+
+            CheckBox:
+                group: "erlang"
+                active: True
+                on_active: root.change('block')
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+
+            Label:
+                text: "Traffic"
+            TextInput:
+                id: traffic_input
+                multiline: False
+                write_tab: False
+
+
+            Label:
+                text: "Lines"
+            TextInput:
+                id: lines_input
+                multiline: False
+                write_tab: False
+
+
+
+            Label:
+                text: "Blocking Rate"
+
+            TextInput:
+                id: block_rate_input
+                multiline: False
+                write_tab: False
+                readonly: True
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+            Button:
+                text: "Caltulate"
+                on_press: root.calculate()
+            Label:
+                text: "Result:"
+            TextInput:
+                id: result
+                readonly: True
+
+        BoxLayout:
+
+
+
+    BoxLayout:
+        Button:
+            text: "okon2"
