@@ -1,27 +1,38 @@
 #: import CheckBox kivy.uix.checkbox
 
 <MyPageLayout>:
-
+    page: 2
+    border: 75
+    swipe_threshold: .0001
     BoxLayout:
         orientation: "vertical"
-
-        padding: 10
-        spacing: 10
-
-        BoxLayout:
+        canvas:
+            Color:
+                rgba: 0, 0, 0, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        padding: 15
+        spacing: 15
+        Button:
+            text: "Help"
+            size_hint_x: .20
+            size_hint_y: .15
+        Label:
+            text: "Erlang"
+            font_size: "40sp"
+            halign: 'center'
 
         BoxLayout:
             size_hint_y: None
             height: "40dp"
-            Label:
-                text: "Erlang Method"
 
             Label:
                 text: "Traffic"
 
             CheckBox:
                 group: "erlang"
-                on_active: root.change('traffic')
+                on_active: root.ReadOnly('traffic', 'erlang')
                 allow_no_selection: False
 
             Label:
@@ -29,7 +40,7 @@
 
             CheckBox:
                 group: "erlang"
-                on_active: root.change('lines')
+                on_active: root.ReadOnly('lines', 'erlang')
                 allow_no_selection: False
 
             Label:
@@ -38,7 +49,8 @@
             CheckBox:
                 group: "erlang"
                 active: True
-                on_active: root.change('block')
+                on_active: root.ReadOnly('block', 'erlang')
+                allow_no_selection: False
 
         BoxLayout:
             size_hint_y: None
@@ -76,7 +88,7 @@
             height: "40dp"
             Button:
                 text: "Caltulate"
-                on_press: root.calculate()
+                on_press: root.calculate('erlang')
             Label:
                 text: "Result:"
             TextInput:
@@ -88,5 +100,223 @@
 
 
     BoxLayout:
+        orientation: "vertical"
+        canvas:
+            Color:
+                rgba: .75, .75, .75, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        padding: 10
+        spacing: 10
         Button:
-            text: "okon2"
+            text: "Help"
+            size_hint_x: .20
+            size_hint_y: .15
+        Label:
+            text: "Engset"
+            font_size: "40sp"
+            halign: 'center'
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+
+
+            Label:
+                text: "Traffic"
+
+            CheckBox:
+                group: "engset"
+                on_active: root.ReadOnly('traffic', 'engset')
+                allow_no_selection: False
+
+            Label:
+                text: "Lines"
+
+            CheckBox:
+                group: "engset"
+                on_active: root.ReadOnly('lines', 'engset')
+                allow_no_selection: False
+
+            Label:
+                text: "Blocking Rate"
+
+            CheckBox:
+                group: "engset"
+                active: True
+                on_active: root.ReadOnly('block', 'engset')
+                allow_no_selection: False
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+
+            Label:
+                text: "Traffic"
+            TextInput:
+                id: engset_traffic
+                multiline: False
+                write_tab: False
+
+
+            Label:
+                text: "Lines"
+            TextInput:
+                id: engset_lines
+                multiline: False
+                write_tab: False
+
+            Label:
+                text: "Sources"
+
+            TextInput:
+                id: sources
+                multiline: False
+                write_tab: False
+
+
+            Label:
+                text: "Blocking Rate"
+
+            TextInput:
+                id: engset_block
+                multiline: False
+                write_tab: False
+                readonly: True
+
+
+
+        BoxLayout:
+            size_hint_y: None
+            height: "40dp"
+            Button:
+                text: "Caltulate"
+                on_press: root.calculate('engset')
+            Label:
+                text: "Result:"
+            TextInput:
+                id: engset_result
+                readonly: True
+
+        BoxLayout:
+
+    BoxLayout:
+        canvas:
+            Color:
+                rgba: .5, .5, .5, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        padding: 10
+        spacing: 10
+        orientation: "vertical"
+        Button:
+            text: "Help"
+            size_hint_x: .20
+            size_hint_y: .15
+        Label:
+            text: "Chart Generator"
+            font_size: "40sp"
+            halign: 'center'
+        GridLayout:
+            cols: 2
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "Traffic:"
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text:"min:"
+                    TextInput:
+                        id: min_traffic
+                        write_tab: False
+                        multiline: False
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text:"max:"
+                    TextInput:
+                        id: max_traffic
+                        write_tab: False
+                        multiline: False
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text: "Step by:"
+                    Spinner:
+                        text: "0.1"
+                        values: ['0.1', '0.5', '1.0', '1.5', '2','5']
+                        id: spinner_id
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "Lines: "
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text:"1: "
+                    TextInput:
+                        id: line_one_input
+                        write_tab: False
+                        multiline: False
+                    CheckBox:
+                        group: "graph"
+                        active: True
+                        on_active: root.GraphLines(1)
+                        allow_no_selection: False
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text:"2: "
+                    TextInput:
+                        id: line_two_input
+                        readonly: True
+                        write_tab: False
+                        multiline: False
+                    CheckBox:
+                        group: "graph"
+                        on_active: root.GraphLines(2)
+                        allow_no_selection: False
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text: "3: "
+                    TextInput:
+                        id: line_three_input
+                        readonly: True
+                        write_tab: False
+                        multiline: False
+                    CheckBox:
+                        group: "graph"
+                        on_active: root.GraphLines(3)
+                        allow_no_selection: False
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text: "4: "
+                    TextInput:
+                        id: line_four_input
+                        readonly: True
+                        write_tab: False
+                        multiline: False
+                    CheckBox:
+                        group: "graph"
+                        on_active: root.GraphLines(4)
+                        allow_no_selection: False
+
+
+        Button:
+            text: "Generate"
+            size_hint_y: .15
+            on_press: root.generate()
