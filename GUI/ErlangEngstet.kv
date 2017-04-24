@@ -1,7 +1,67 @@
 #: import CheckBox kivy.uix.checkbox
 
+<CustomPopup>:
+    size_hint: .75, .75
+    auto_dismiss: False
+    title: "Help"
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Erlang Method"
+            haling: "center"
+        Label:
+            text: "Traffic: The traffic in Erlangs"
+        Label:
+            text: "Lines: The number of servers"
+        Label:
+            text: "Blocking rate: Probability of blocking the network"
+        Label:
+            text_size: self.size
+            halign: "center"
+            text: " To proper calculation we recommend to use FLOAT values of 'Traffic' or 'Blocking Rate' and INTEGER values of 'Lines'."
+        Label:
+            text_size: self.size
+            halign: 'center'
+            text: " You can chose which parameter to calculate by clicking proper RadioButton, once parameter input would be set as disabled after."
+        Button:
+            text: "Close"
+            on_press: root.dismiss()
+
+<EngsetPopup>:
+    size_hint: .75, .75
+    auto_dismiss: False
+    title: "Help"
+    BoxLayout:
+        orientation: "vertical"
+        Label:
+            text: "Engset Method"
+            haling: "center"
+        Label:
+            text: "Traffic: The traffic in Erlangs"
+        Label:
+            text: "Lines: The number of servers"
+        Label:
+            text: "Blocking rate: Probability of blocking the network"
+        Label:
+            text: "Sources: the number of points generating the traffic"
+
+        Label:
+            text_size: self.size
+            halign: "center"
+            text: " To proper calculation we recommend to use FLOAT values of 'Traffic' or 'Blocking Rate' and INTEGER value of 'Lines' or 'Sources'."
+        Label:
+            text_size: self.size
+            halign: "center"
+            text: " You can chose which parameter to calculate by clicking proper RadioButton, once parameter input would be set as disabled after."
+
+        Button:
+            text: "Close"
+            on_press: root.dismiss()
+
+
+
+
 <MyPageLayout>:
-    page: 2
     border: 75
     swipe_threshold: .0001
     BoxLayout:
@@ -18,6 +78,7 @@
             text: "Help"
             size_hint_x: .20
             size_hint_y: .15
+            on_press: root.open_popup('erlang')
         Label:
             text: "Erlang"
             font_size: "40sp"
@@ -103,7 +164,7 @@
         orientation: "vertical"
         canvas:
             Color:
-                rgba: .75, .75, .75, 1
+                rgba: .2, .2, .2, 1
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -113,6 +174,7 @@
             text: "Help"
             size_hint_x: .20
             size_hint_y: .15
+            on_press: root.open_popup('engset')
         Label:
             text: "Engset"
             font_size: "40sp"
@@ -204,7 +266,7 @@
     BoxLayout:
         canvas:
             Color:
-                rgba: .5, .5, .5, 1
+                rgba: .4, .4, .4, 1
             Rectangle:
                 pos: self.pos
                 size: self.size
@@ -215,6 +277,7 @@
             text: "Help"
             size_hint_x: .20
             size_hint_y: .15
+            on_press: root.open_popup('chart')
         Label:
             text: "Chart Generator"
             font_size: "40sp"
@@ -231,6 +294,7 @@
                     Label:
                         text:"min:"
                     TextInput:
+                        text: "3.4"
                         id: min_traffic
                         write_tab: False
                         multiline: False
@@ -240,6 +304,7 @@
                     Label:
                         text:"max:"
                     TextInput:
+                        text: "123.4"
                         id: max_traffic
                         write_tab: False
                         multiline: False
@@ -249,8 +314,8 @@
                     Label:
                         text: "Step by:"
                     Spinner:
-                        text: "0.1"
-                        values: ['0.1', '0.5', '1.0', '1.5', '2','5']
+                        text: "1.0"
+                        values: ['0.1', '0.5', '1.0', '1.5', '2.0','5.0']
                         id: spinner_id
             BoxLayout:
                 orientation: "vertical"
@@ -262,6 +327,7 @@
                     Label:
                         text:"1: "
                     TextInput:
+                        text: "10"
                         id: line_one_input
                         write_tab: False
                         multiline: False

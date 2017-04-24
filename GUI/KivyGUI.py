@@ -10,6 +10,18 @@ Config.set('graphics', 'width', '800')
 Config.set('graphics', 'height', '600')
 
 
+class CustomPopup(Popup):
+    pass
+
+
+class EngsetPopup(Popup):
+    pass
+
+
+class CustPopup2(Popup):
+    pass
+
+
 class MyPageLayout(PageLayout):
 
     popup = Popup(title='Input Popup',
@@ -115,7 +127,7 @@ class MyPageLayout(PageLayout):
                 for j in range(n_steps+1):
                     model = Model(x[j], lines[i], block)
                     y[i].append(model.calculate_erlang())
-                print(y[i])
+
             generate_graph(x, y, lines)
         except ValueError:
             self.popup.open()
@@ -130,6 +142,15 @@ class MyPageLayout(PageLayout):
             tab[i].text = ""
         for i in range(num):
             tab[i].readonly = False
+
+    def open_popup(self, type):
+        if type == 'erlang':
+            the_popup = CustomPopup()
+        elif type == 'engset':
+            the_popup = EngsetPopup()
+        elif type == 'chart':
+            the_popup = CustPopup2()
+        the_popup.open()
 
 
 class ErlangEngstetApp(App):
