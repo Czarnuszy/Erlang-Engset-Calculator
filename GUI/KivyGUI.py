@@ -29,13 +29,14 @@ class MyPageLayout(PageLayout):
                   size_hint=(None, None), size=(400, 400))
 
     lin = 1
+    tab = []
 
     def ReadOnly(self, variable, algorithm):
         """
         :param variable: name of variable to calcluate
         :param algorithm: decides witch group of widgets should be changed
         """
-        tab = []
+        graph_inputs = []
         if algorithm == 'erlang':
             tab = [self.ids.traffic_input, self.ids.lines_input, self.ids.block_rate_input]
         if algorithm == 'engset':
@@ -45,17 +46,16 @@ class MyPageLayout(PageLayout):
             tab[0].readonly = True
             tab[1].readonly = False
             tab[2].readonly = False
-            tab[0].text = ""
+
         elif variable == "lines":
             tab[1].readonly = True
             tab[0].readonly = False
             tab[2].readonly = False
-            tab[1].text = ""
+
         elif variable == "block":
             tab[2].readonly = True
             tab[1].readonly = False
             tab[0].readonly = False
-            tab[2].text = ""
 
     def checkEnabled(self, arg):
 
@@ -96,41 +96,70 @@ class MyPageLayout(PageLayout):
             except ValueError:
                 self.popup.open()
 
-    def generate(self):
+    def generate(self, graph):
         x = []
         y = []
-        lines = []
+        inputs = []
         for i in range(self.lin):
             y.append([])
         try:
-            block = False
-            if self.lin == 1:
-                lines.append(int(self.ids.line_one_input.text))
-            elif self.lin == 2:
-                lines.append(int(self.ids.line_one_input.text))
-                lines.append(int(self.ids.line_two_input.text))
-            elif self.lin == 3:
-                lines.append(int(self.ids.line_one_input.text))
-                lines.append(int(self.ids.line_two_input.text))
-                lines.append(int(self.ids.line_three_input.text))
-            elif self.lin == 4:
-                lines.append(int(self.ids.line_one_input.text))
-                lines.append(int(self.ids.line_two_input.text))
-                lines.append(int(self.ids.line_three_input.text))
-                lines.append(int(self.ids.line_four_input.text))
-            step = float(self.ids.spinner_id.text)
-            n_steps = int(floor((float(self.ids.max_traffic.text) - float(self.ids.min_traffic.text))/step))
-            x.append(float(self.ids.min_traffic.text))
-            for i in range(n_steps):
-                x.append(x[i] + step)
-            for i in range(self.lin):
-                for j in range(n_steps+1):
-                    model = Model(x[j], lines[i], block)
-                    y[i].append(model.calculate_erlang())
+            if graph == 'lines':
+                if self.lin == 1:
+                    inputs.append(int(self.ids.line_one_input.text))
+                elif self.lin == 2:
+                    inputs.append(int(self.ids.line_one_input.text))
+                    inputs.append(int(self.ids.line_two_input.text))
+                elif self.lin == 3:
+                    inputs.append(int(self.ids.line_one_input.text))
+                    inputs.append(int(self.ids.line_two_input.text))
+                    inputs.append(int(self.ids.line_three_input.text))
+                elif self.lin == 4:
+                    inputs.append(int(self.ids.line_one_input.text))
+                    inputs.append(int(self.ids.line_two_input.text))
+                    inputs.append(int(self.ids.line_three_input.text))
+                    inputs.append(int(self.ids.line_four_input.text))
+                step = float(self.ids.spinner_id.text)
+                n_steps = int(floor((float(self.ids.max_traffic.text) - float(self.ids.min_traffic.text)) / step))
+                x.append(float(self.ids.min_traffic.text))
+                for i in range(n_steps):
+                    x.append(x[i] + step)
+                    print(x[i])
+                for i in range(self.lin):
+                    for j in range(n_steps + 1):
+                        model = Model(traffic=x[j], lines=inputs[i], blocking_rate=False)
+                        y[i].append(model.calculate_erlang())
+                        print(y[i])
+            elif graph == 'block':
+                if self.lin == 1:
+                    inputs.append(float(self.ids.block_one_input.text))
+                elif self.lin == 2:
+                    inputs.append(float(self.ids.block_one_input.text))
+                    inputs.append(float(self.ids.block_two_input.text))
+                elif self.lin == 3:
+                    inputs.append(float(self.ids.block_one_input.text))
+                    inputs.append(float(self.ids.block_two_input.text))
+                    inputs.append(float(self.ids.block_three_input.text))
+                elif self.lin == 4:
+                    inputs.append(float(self.ids.block_one_input.text))
+                    inputs.append(float(self.ids.block_two_input.text))
+                    inputs.append(float(self.ids.block_three_input.text))
+                    inputs.append(float(self.ids.block_four_input.text))
+                step = int(self.ids.spinner2_id.text)
+                n_steps = int(floor((int(self.ids.max_lines.text) - int(self.ids.min_lines.text)) / step))
+                x.append(int(self.ids.min_lines.text))
+                print(n_steps)
+                print(x)
+                for i in range(n_steps):
+                    x.append(x[i] + step)
+                for i in range(self.lin):
+                    for j in range(n_steps+1):
+                        model = Model(traffic=False, lines= x[j], blocking_rate=inputs[i])
+                        y[i].append(model.calculate_erlang())
+                        print(y[i])
 
-            generate_graph(x, y, lines)
+            generate_graph(x, y, inputs, graph)
         except ValueError:
-            self.popup.open()
+            raise
 
 
     def GraphLines(self, num):
@@ -139,7 +168,17 @@ class MyPageLayout(PageLayout):
         self.lin = num
         for i in range(4):
             tab[i].readonly = True
-            tab[i].text = ""
+
+        for i in range(num):
+            tab[i].readonly = False
+
+    def GraphLines2(self, num):
+        tab = [self.ids.block_one_input, self.ids.block_two_input, self.ids.block_three_input,
+               self.ids.block_four_input]
+        self.lin = num
+        for i in range(4):
+            tab[i].readonly = True
+
         for i in range(num):
             tab[i].readonly = False
 

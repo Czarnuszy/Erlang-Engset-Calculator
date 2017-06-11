@@ -71,7 +71,7 @@ class ErlangAlgorithm:
         while float(p_search) <= Pb:
             traffic += .1
             p_search = self.calculate_erlang_p(traffic, lines)
-
+        print(round(traffic, 2), 'dupa')
         return round(traffic, 2)
 
     def ann_small(self, n, a):
