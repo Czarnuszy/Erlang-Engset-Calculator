@@ -62,6 +62,7 @@
 
 
 <MyPageLayout>:
+    page: 3
     border: 75
     swipe_threshold: .0001
     BoxLayout:
@@ -120,6 +121,7 @@
             Label:
                 text: "Traffic"
             TextInput:
+                text: "3.4"
                 id: traffic_input
                 multiline: False
                 write_tab: False
@@ -128,6 +130,7 @@
             Label:
                 text: "Lines"
             TextInput:
+                text: "10"
                 id: lines_input
                 multiline: False
                 write_tab: False
@@ -217,6 +220,7 @@
             Label:
                 text: "Traffic"
             TextInput:
+                text: "3.4"
                 id: engset_traffic
                 multiline: False
                 write_tab: False
@@ -225,6 +229,7 @@
             Label:
                 text: "Lines"
             TextInput:
+                text: "10"
                 id: engset_lines
                 multiline: False
                 write_tab: False
@@ -233,6 +238,7 @@
                 text: "Sources"
 
             TextInput:
+                text: "500"
                 id: sources
                 multiline: False
                 write_tab: False
@@ -279,7 +285,7 @@
             size_hint_y: .15
             on_press: root.open_popup('chart')
         Label:
-            text: "Chart Generator"
+            text: "Traffic/Lines Chart Generator"
             font_size: "40sp"
             halign: 'center'
         GridLayout:
@@ -385,4 +391,128 @@
         Button:
             text: "Generate"
             size_hint_y: .15
-            on_press: root.generate()
+            on_press: root.generate('lines')
+
+    BoxLayout:
+        canvas:
+            Color:
+                rgba: .6, .6, .6, 1
+            Rectangle:
+                pos: self.pos
+                size: self.size
+        padding: 10
+        spacing: 10
+        orientation: "vertical"
+        Button:
+            text: "Help"
+            size_hint_x: .20
+            size_hint_y: .15
+            on_press: root.open_popup('chart')
+        Label:
+            text: "Lines/Blocking Rate Chart Generator"
+            font_size: "40sp"
+            halign: 'center'
+        GridLayout:
+            cols: 2
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "Lines:"
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text:"min:"
+                    TextInput:
+                        text: "10"
+                        id: min_lines
+                        write_tab: False
+                        multiline: False
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text:"max:"
+                    TextInput:
+                        text: "120"
+                        id: max_lines
+                        write_tab: False
+                        multiline: False
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text: "Step by:"
+                    Spinner:
+                        text: "10"
+                        values: ['10', '15', '20', '25', '50']
+                        id: spinner2_id
+            BoxLayout:
+                orientation: "vertical"
+                Label:
+                    text: "Blocking Rate: "
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text:"1: "
+                    TextInput:
+                        text: "0.004"
+                        id: block_one_input
+                        write_tab: False
+                        multiline: False
+                    CheckBox:
+                        group: "graph2"
+                        active: True
+                        on_active: root.GraphLines2(1)
+                        allow_no_selection: False
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text:"2: "
+                    TextInput:
+                        id: block_two_input
+                        readonly: True
+                        write_tab: False
+                        multiline: False
+                    CheckBox:
+                        group: "graph2"
+                        on_active: root.GraphLines2(2)
+                        allow_no_selection: False
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text: "3: "
+                    TextInput:
+                        id: block_three_input
+                        readonly: True
+                        write_tab: False
+                        multiline: False
+                    CheckBox:
+                        group: "graph2"
+                        on_active: root.GraphLines2(3)
+                        allow_no_selection: False
+
+                BoxLayout:
+                    size_hint_y: None
+                    height: "40dp"
+                    Label:
+                        text: "4: "
+                    TextInput:
+                        id: block_four_input
+                        readonly: True
+                        write_tab: False
+                        multiline: False
+                    CheckBox:
+                        group: "graph2"
+                        on_active: root.GraphLines2(4)
+                        allow_no_selection: False
+
+
+        Button:
+            text: "Generate"
+            size_hint_y: .15
+            on_press: root.generate('block')
