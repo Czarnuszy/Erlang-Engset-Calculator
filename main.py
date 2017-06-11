@@ -15,7 +15,8 @@ class Model:
     users           = amount of users / the mean call length or holding time
     block           = the mean arrival rate of new calls
     """
-    def __init__(self, traffic=None, lines=None, blocking_rate=None, sources=None):
+    def __init__(self, traffic=None, lines=None, blocking_rate=None,
+                 sources=None):
         self._block = 0.1
         self._users = None
         self.lines = lines
@@ -62,7 +63,8 @@ class Model:
 
     def calculate_erlang(self):
         """
-        Erlang algorithm
+        Erlang algorithmstall
+
         :return: traffic / lines / blocking_rate
          dependence which value is equal False
         """
@@ -78,13 +80,10 @@ class Model:
         self.validate_data()
         return EngsetAlgorithm(self).calculate()
 
+if __name__ == '__main__':
+    model = Model()
+    model.traffic = 3.4
+    model.lines = 10
+    model.sources = 500
+    model.blocking_rate = False
 
-model = Model()
-model.traffic = 3.4
-model.lines = 10
-#model.lines = 10
-model.sources = 500
-model.blocking_rate = False
-#model.calculate_traffic_per_hour(350, 180)
-
-#print(model.calculate_engset())

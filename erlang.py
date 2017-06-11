@@ -1,5 +1,5 @@
 from math import factorial
-from utils import precision
+from utils import precision, precision2
 
 
 class ErlangAlgorithm:
@@ -42,7 +42,7 @@ class ErlangAlgorithm:
 
         Pb = self.ann(lines, traffic) / _sum
 
-        return precision(Pb, 4)
+        return precision2(Pb)
 
     def calculate_erlang_n(self, traffic, Pb):
         """
